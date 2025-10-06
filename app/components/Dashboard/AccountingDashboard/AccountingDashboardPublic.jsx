@@ -16,6 +16,7 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recha
 export default function AccountingDashboard() {
     const [dateFrom, setDateFrom] = useState('2025-01-01');
     const [dateTo, setDateTo] = useState('2025-10-06');
+    const [activeTab, setActiveTab] = useState('cash');
 
     const summaryCards = [
         {
@@ -126,6 +127,36 @@ export default function AccountingDashboard() {
         { name: 'Cash Speednet', amount: '৳ 452,723.00' },
         { name: 'Bogura New Cash', amount: '৳ 3,042.50' }
     ];
+
+    const bankAccounts = [
+        { name: 'DBBL - Main Account', amount: '৳ 5,234,567.00' },
+        { name: 'City Bank - Corporate', amount: '৳ 2,456,789.00' },
+        { name: 'IFIC Bank - Savings', amount: '৳ 1,234,500.00' },
+        { name: 'Islami Bank - Current', amount: '৳ -125,000.00' },
+        { name: 'Standard Chartered', amount: '৳ 3,567,890.00' },
+        { name: 'Prime Bank - Business', amount: '৳ 890,456.00' }
+    ];
+
+    const mobileBankAccounts = [
+        { name: 'bKash - Personal', amount: '৳ 234,567.00' },
+        { name: 'bKash - Merchant', amount: '৳ 456,789.00' },
+        { name: 'Nagad - Agent', amount: '৳ 123,456.00' },
+        { name: 'Rocket - DBBL', amount: '৳ 78,900.00' },
+        { name: 'Upay - Business', amount: '৳ 45,678.00' }
+    ];
+
+    const getAccountsByTab = () => {
+        switch(activeTab) {
+            case 'cash':
+                return cashAccounts;
+            case 'bank':
+                return bankAccounts;
+            case 'mobile':
+                return mobileBankAccounts;
+            default:
+                return cashAccounts;
+        }
+    };
 
     const renderCustomLabel = (entry) => {
         return `${entry.value}%`;
@@ -322,7 +353,7 @@ export default function AccountingDashboard() {
                     </div>
 
                     {/* Latest Expenses */}
-                    <div className="bg-white rounded-md shadow-sm border border-gray-200">
+                    <div className="bg-white rounded-lg shadow-sm border border-gray-200">
                         <div className="bg-gray-700 px-6 py-3">
                             <h2 className="text-lg font-semibold text-white">Latest Expenses</h2>
                         </div>
@@ -353,15 +384,36 @@ export default function AccountingDashboard() {
                 <div className="bg-white rounded-lg shadow-sm border border-gray-200">
                     <div className="border-b border-gray-200">
                         <div className="flex space-x-6 px-6">
-                            <button className="py-3 border-b-2 border-blue-600 text-blue-600 font-medium flex items-center">
+                            <button 
+                                onClick={() => setActiveTab('cash')}
+                                className={`py-3 border-b-2 font-medium flex items-center transition-colors cursor-pointer ${
+                                    activeTab === 'cash' 
+                                        ? 'border-blue-600 text-blue-600' 
+                                        : 'border-transparent text-gray-600 hover:text-gray-900'
+                                }`}
+                            >
                                 <User className="w-4 h-4 mr-2" />
                                 CASH
                             </button>
-                            <button className="py-3 text-gray-600 hover:text-gray-900 flex items-center">
+                            <button 
+                                onClick={() => setActiveTab('bank')}
+                                className={`py-3 border-b-2 font-medium flex items-center transition-colors cursor-pointer ${
+                                    activeTab === 'bank' 
+                                        ? 'border-blue-600 text-blue-600' 
+                                        : 'border-transparent text-gray-600 hover:text-gray-900'
+                                }`}
+                            >
                                 <Wallet className="w-4 h-4 mr-2" />
                                 BANK
                             </button>
-                            <button className="py-3 text-gray-600 hover:text-gray-900 flex items-center">
+                            <button 
+                                onClick={() => setActiveTab('mobile')}
+                                className={`py-3 border-b-2 font-medium flex items-center transition-colors cursor-pointer ${
+                                    activeTab === 'mobile' 
+                                        ? 'border-blue-600 text-blue-600' 
+                                        : 'border-transparent text-gray-600 hover:text-gray-900'
+                                }`}
+                            >
                                 <CreditCard className="w-4 h-4 mr-2" />
                                 MOBILE BANK
                             </button>
@@ -376,7 +428,7 @@ export default function AccountingDashboard() {
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-200">
-                                {cashAccounts.map((account, index) => (
+                                {getAccountsByTab().map((account, index) => (
                                     <tr key={index} className="hover:bg-gray-50">
                                         <td className="px-6 py-4 text-sm text-blue-600 font-medium">{account.name}</td>
                                         <td className={`px-6 py-4 text-sm text-right font-semibold ${
