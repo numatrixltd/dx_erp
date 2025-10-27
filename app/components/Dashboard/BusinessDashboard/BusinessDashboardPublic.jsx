@@ -17,38 +17,8 @@ import { SalesAnalytics } from "./SalesAnalytics";
 import { SalesDashboard } from "./SalesTrendDashboard";
 import { StockAnalytics } from "./StockAnalytics";
 import CustomerAnalytics from "./TopCustomersSection";
+import PrimarySales from "./PrimarySales";
 export default function BusinessComponent() {
-  const statsData = [
-    {
-      title: "Today",
-      value: "BDT 0.0000",
-      change: "0%",
-      trend: "neutral",
-      previous: "Yesterday: BDT 1,497,607.0000",
-    },
-    {
-      title: "This Week",
-      value: "BDT 0.0000",
-      change: "0%",
-      trend: "neutral",
-      previous: "Last Week: BDT 1,497,607.0000",
-    },
-    {
-      title: "This Month",
-      value: "BDT 5,895,899.2104",
-      change: "139%",
-      trend: "up",
-      previous: "Last Month: BDT 4,245,888.2000",
-    },
-    {
-      title: "This Year",
-      value: "BDT 21,727,679.9704",
-      change: "0%",
-      trend: "up",
-      previous: "Last Year: BDT 0.0000",
-    },
-  ];
-
   const posData = [
     {
       title: "Today",
@@ -212,50 +182,9 @@ export default function BusinessComponent() {
                 </div> */}
 
         {/* Stats Overview */}
-        <div className="bg-gradient-to-r from-blue-500 to-red-600 px-8 py-3 rounded-xl">
-          <div className="flex justify-center items-center space-x-3">
-            <CreditCard className="w-7 h-7 text-white" />
-            <h3 className="text-2xl font-bold text-white">Primary Sales</h3>
-          </div>
-          <p className="text-indigo-100 mt-2 text-center">
-            Track your Sales performance metrics
-          </p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {statsData.map((stat, index) => (
-            <StatCard
-              key={index}
-              {...stat}
-              gradient={
-                index === 0
-                  ? "from-blue-500 to-cyan-500"
-                  : index === 1
-                  ? "from-emerald-500 to-teal-500"
-                  : index === 2
-                  ? "from-purple-500 to-pink-500"
-                  : "from-orange-500 to-red-500"
-              }
-              iconBg={
-                index === 0
-                  ? "from-blue-500 to-cyan-500"
-                  : index === 1
-                  ? "from-emerald-500 to-teal-500"
-                  : index === 2
-                  ? "from-purple-500 to-pink-500"
-                  : "from-orange-500 to-red-500"
-              }
-              icon={
-                index === 0
-                  ? DollarSign
-                  : index === 1
-                  ? TrendingUp
-                  : index === 2
-                  ? BarChart3
-                  : Activity
-              }
-            />
-          ))}
-        </div>
+
+        <PrimarySales />
+
         <div className="bg-white/70 backdrop-blur-sm rounded-3xl shadow-xl border border-white/20 overflow-hidden col-span-2">
           <div className="bg-gradient-to-r from-indigo-500 to-purple-600 px-8 py-3">
             <div className="flex justify-center items-center space-x-3">
