@@ -1,41 +1,88 @@
+"use client";
+
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { fetchPOSData } from "@/lib/features/sales/posSlice";
 import {
     Activity,
     ArrowDownRight,
     ArrowUpRight,
-    CreditCard
+    CreditCard,
+    Loader2,
+    AlertCircle
 } from "lucide-react";
 
 const POSPublic = () => {
-  const posData = [
-    {
-      title: "Today",
-      value: "BDT 0.0000",
-      change: "0%",
-      trend: "neutral",
-      previous: "Yesterday: BDT 10,635.0000",
-    },
-    {
-      title: "This Week",
-      value: "BDT 0.0000",
-      change: "0%",
-      trend: "neutral",
-      previous: "Last Week: BDT 10,635.0000",
-    },
-    {
-      title: "This Month",
-      value: "BDT 35,280.0000",
-      change: "244%",
-      trend: "up",
-      previous: "Last Month: BDT 262,627.7500",
-    },
-    {
-      title: "This Year",
-      value: "BDT 485,951.3500",
-      change: "0%",
-      trend: "up",
-      previous: "Last Year: BDT 0.0000",
-    },
-  ];
+  const dispatch = useAppDispatch();
+  const { data: posData, loading, error } = useAppSelector(
+    (state) => state.pos
+  );
+  const { selectedEnvironment, environments } = useAppSelector(
+    (state) => state.environment
+  );
+  
+  const currentEnvironment = environments.find((e) => e.id === selectedEnvironment);
+
+  useEffect(() => {
+    dispatch(fetchPOSData());
+  }, [dispatch, selectedEnvironment]); // Refetch when environment changes
+
+  if (loading) {
+    return (
+      <div className="bg-white/70 backdrop-blur-sm rounded-3xl shadow-xl border border-white/20 overflow-hidden col-span-2">
+        <div className="bg-gradient-to-r from-indigo-500 to-purple-600 px-8 py-3">
+          <div className="flex flex-col items-center space-y-2">
+            <div className="flex items-center space-x-3">
+              <CreditCard className="w-7 h-7 text-white" />
+              <h3 className="text-2xl font-bold text-white">POS</h3>
+            </div>
+            <p className="text-white text-lg font-semibold bg-white/20 px-4 py-1 rounded-full">
+              {currentEnvironment?.displayName || 'SEBL Distribution'}
+            </p>
+            <p className="text-indigo-100 mt-2 text-center">
+              Track your POS performance metrics
+            </p>
+          </div>
+        </div>
+        <div className="p-8 flex items-center justify-center">
+          <Loader2 className="w-8 h-8 animate-spin text-indigo-500" />
+          <span className="ml-3 text-gray-600">Loading POS data...</span>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="bg-white/70 backdrop-blur-sm rounded-3xl shadow-xl border border-white/20 overflow-hidden col-span-2">
+        <div className="bg-gradient-to-r from-indigo-500 to-purple-600 px-8 py-3">
+          <div className="flex flex-col items-center space-y-2">
+            <div className="flex items-center space-x-3">
+              <CreditCard className="w-7 h-7 text-white" />
+              <h3 className="text-2xl font-bold text-white">POS</h3>
+            </div>
+            {/* <p className="text-white text-lg font-semibold bg-white/20 px-4 py-1 rounded-full">
+              {currentEnvironment?.displayName || 'SEBL Distribution'}
+            </p> */}
+            <p className="text-indigo-100 mt-2 text-center">
+              Track your POS performance metrics
+            </p>
+          </div>
+        </div>
+        <div className="p-8 flex items-center justify-center">
+          <div className="bg-red-50 border border-red-200 rounded-xl p-6 max-w-md">
+            <div className="flex items-start space-x-3">
+              <AlertCircle className="w-6 h-6 text-red-500 flex-shrink-0 mt-0.5" />
+              <div>
+                <h4 className="text-red-800 font-semibold mb-1">Error Loading Data</h4>
+                <p className="text-red-600 text-sm">{error}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   const StatCard = ({
     title,
@@ -96,13 +143,18 @@ const POSPublic = () => {
   return (
     <div className="bg-white/70 backdrop-blur-sm rounded-3xl shadow-xl border border-white/20 overflow-hidden col-span-2">
       <div className="bg-gradient-to-r from-indigo-500 to-purple-600 px-8 py-3">
-        <div className="flex justify-center items-center space-x-3">
-          <CreditCard className="w-7 h-7 text-white" />
-          <h3 className="text-2xl font-bold text-white">POS</h3>
+        <div className="flex flex-col items-center space-y-2">
+          <div className="flex items-center space-x-3">
+            <CreditCard className="w-7 h-7 text-white" />
+            <h3 className="text-2xl font-bold text-white">POS</h3>
+          </div>
+          {/* <p className="text-white text-lg font-semibold bg-white/20 px-4 py-1 rounded-full">
+            {currentEnvironment?.displayName || 'SEBL Distribution'}
+          </p> */}
+          <p className="text-indigo-100 mt-2 text-center">
+            Track your POS performance metrics
+          </p>
         </div>
-        <p className="text-indigo-100 mt-2 text-center">
-          Track your POS performance metrics
-        </p>
       </div>
       <div className="p-2 md:p-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
