@@ -1,24 +1,36 @@
 "use client";
-import { Building2, Calculator, Calendar, Home, Menu, X } from "lucide-react";
-import { useState, useEffect } from "react";
+import { Building2, Calculator, Calendar, Home, Menu, X, ChevronDown } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import {
+  setSidebarOpen,
+  setActiveSection,
+  toggleDashboardDropdown,
+  setIsMobile,
+} from "@/lib/features/ui/uiSlice";
+import { setEnvironment } from "@/lib/features/environment/environmentSlice";
 import AccountingComponent from "./AccountingDashboard/AccountingDashboardPublic";
 import BusinessComponent from "./BusinessDashboard/BusinessDashboardPublic";
 
 const Dashboard = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(false); // Closed by default for mobile-first
-  const [activeSection, setActiveSection] = useState("Business Dashboard");
-  const [dashboardDropdownOpen, setDashboardDropdownOpen] = useState(true);
-  const [isMobile, setIsMobile] = useState(false);
+  const dispatch = useAppDispatch();
+  const { sidebarOpen, activeSection, dashboardDropdownOpen, isMobile } = useAppSelector(
+    (state) => state.ui
+  );
+  const { selectedEnvironment, environments } = useAppSelector(
+    (state) => state.environment
+  );
+  const [envDropdownOpen, setEnvDropdownOpen] = useState(false);
 
   // Detect screen size and handle responsive behavior
   useEffect(() => {
     const checkIsMobile = () => {
       const mobile = window.innerWidth < 768;
       const wasMobile = isMobile;
-      setIsMobile(mobile);
+      dispatch(setIsMobile(mobile));
       // On initial load or switching from mobile to desktop, open sidebar
       if (!mobile && wasMobile && window.innerWidth >= 768) {
-        setSidebarOpen(true);
+        dispatch(setSidebarOpen(true));
       }
     };
 
@@ -26,7 +38,7 @@ const Dashboard = () => {
     window.addEventListener("resize", checkIsMobile);
 
     return () => window.removeEventListener("resize", checkIsMobile);
-  }, [isMobile]);
+  }, [isMobile, dispatch]);
 
   const sidebarItems = [
     {
@@ -41,10 +53,10 @@ const Dashboard = () => {
   ];
 
   const handleSectionChange = (section) => {
-    setActiveSection(section);
+    dispatch(setActiveSection(section));
     // Close sidebar on mobile after selection
     if (isMobile) {
-      setSidebarOpen(false);
+      dispatch(setSidebarOpen(false));
     }
   };
 
@@ -65,7 +77,7 @@ const Dashboard = () => {
       {isMobile && sidebarOpen && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
-          onClick={() => setSidebarOpen(false)}
+          onClick={() => dispatch(setSidebarOpen(false))}
         />
       )}
 
@@ -93,7 +105,7 @@ const Dashboard = () => {
             DX ERP Dashboard
           </h1>
           <button
-            onClick={() => setSidebarOpen(!sidebarOpen)}
+            onClick={() => dispatch(setSidebarOpen(!sidebarOpen))}
             className="text-gray-300 hover:text-white p-1"
           >
             {sidebarOpen ? (
@@ -113,7 +125,7 @@ const Dashboard = () => {
                 <button
                   onClick={() => {
                     if (item.dropdown) {
-                      setDashboardDropdownOpen(!dashboardDropdownOpen);
+                      dispatch(toggleDashboardDropdown());
                     }
                   }}
                   className={`w-full flex items-center px-3 py-3 text-left rounded-lg transition-all duration-200
@@ -172,7 +184,7 @@ const Dashboard = () => {
             {/* Mobile menu button */}
             {isMobile && (
               <button
-                onClick={() => setSidebarOpen(true)}
+                onClick={() => dispatch(setSidebarOpen(true))}
                 className="text-gray-600 hover:text-gray-900 p-1 md:hidden"
               >
                 <Menu className="w-6 h-6" />
@@ -183,18 +195,53 @@ const Dashboard = () => {
             </h2>
           </div>
           <div className="flex items-center space-x-2 md:space-x-4">
-            <div className="hidden sm:flex items-center space-x-2 bg-gray-100 rounded-lg px-3 py-2">
+            {/* <div className="hidden sm:flex items-center space-x-2 bg-gray-100 rounded-lg px-3 py-2">
               <Calendar className="w-4 h-4 text-gray-600" />
               <span className="text-sm text-gray-600">
                 2025-01-01 - 2025-09-28
               </span>
             </div>
-            {/* Mobile date display (shortened) */}
+            
             <div className="sm:hidden flex items-center space-x-1 bg-gray-100 rounded-lg px-2 py-1">
               <Calendar className="w-4 h-4 text-gray-600" />
               <span className="text-xs text-gray-600">2025</span>
+            </div> */}
+            
+            {/* Environment Selector */}
+            <div className="relative">
+              <button
+                onClick={() => setEnvDropdownOpen(!envDropdownOpen)}
+                className="flex items-center space-x-2 bg-gradient-to-br from-slate-800 to-red-900 text-white px-4 py-2 rounded-lg hover:from-slate-600 hover:to-red-700 transition-all duration-200"
+              >
+                <span className="text-sm font-medium">
+                  {environments.find((e) => e.id === selectedEnvironment)?.name || 'SD'}
+                </span>
+                <ChevronDown className="w-4 h-4" />
+              </button>
+              
+              {envDropdownOpen && (
+                <div className="absolute right-0 mt-2 w-32 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
+                  {environments.map((env) => (
+                    <button
+                      key={env.id}
+                      onClick={() => {
+                        dispatch(setEnvironment(env.id));
+                        setEnvDropdownOpen(false);
+                      }}
+                      className={`w-full text-left px-4 py-2 hover:bg-gray-100 transition-colors ${
+                        selectedEnvironment === env.id
+                          ? 'bg-gradient-to-br from-slate-800 to-red-900 text-white font-semibold'
+                          : 'text-gray-700'
+                      }`}
+                    >
+                      {env.name}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
-            <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+            
+            <div className="w-8 h-8 bg-gradient-to-br from-slate-800 to-red-900 rounded-full flex items-center justify-center">
               <span className="text-white text-sm font-medium">U</span>
             </div>
           </div>
