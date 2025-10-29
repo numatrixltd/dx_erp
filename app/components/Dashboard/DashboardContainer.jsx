@@ -1,22 +1,26 @@
 "use client";
-import { Building2, Calculator, Calendar, Home, Menu, X, ChevronDown } from "lucide-react";
-import { useEffect, useState } from "react";
+import { setEnvironment } from "@/lib/features/environment/environmentSlice";
+import {
+  setActiveSection,
+  setIsMobile,
+  setSidebarOpen,
+  toggleDashboardDropdown,
+} from "@/lib/features/ui/uiSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import {
-  setSidebarOpen,
-  setActiveSection,
-  toggleDashboardDropdown,
-  setIsMobile,
-} from "@/lib/features/ui/uiSlice";
-import { setEnvironment } from "@/lib/features/environment/environmentSlice";
+  ChevronDown,
+  Home,
+  Menu,
+  X
+} from "lucide-react";
+import { useEffect, useState } from "react";
 import AccountingComponent from "./AccountingDashboard/AccountingDashboardPublic";
 import BusinessComponent from "./BusinessDashboard/BusinessDashboardPublic";
 
 const Dashboard = () => {
   const dispatch = useAppDispatch();
-  const { sidebarOpen, activeSection, dashboardDropdownOpen, isMobile } = useAppSelector(
-    (state) => state.ui
-  );
+  const { sidebarOpen, activeSection, dashboardDropdownOpen, isMobile } =
+    useAppSelector((state) => state.ui);
   const { selectedEnvironment, environments } = useAppSelector(
     (state) => state.environment
   );
@@ -190,7 +194,7 @@ const Dashboard = () => {
                 <Menu className="w-6 h-6" />
               </button>
             )}
-            <h2 className="text-lg md:text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            <h2 className="text-lg md:text-2xl font-bold bg-gradient-to-br from-slate-400 to-red-600 bg-clip-text text-transparent">
               {activeSection}
             </h2>
           </div>
@@ -206,7 +210,7 @@ const Dashboard = () => {
               <Calendar className="w-4 h-4 text-gray-600" />
               <span className="text-xs text-gray-600">2025</span>
             </div> */}
-            
+
             {/* Environment Selector */}
             <div className="relative">
               <button
@@ -214,11 +218,12 @@ const Dashboard = () => {
                 className="flex items-center space-x-2 bg-gradient-to-br from-slate-800 to-red-900 text-white px-4 py-2 rounded-lg hover:from-slate-600 hover:to-red-700 transition-all duration-200"
               >
                 <span className="text-sm font-medium">
-                  {environments.find((e) => e.id === selectedEnvironment)?.name || 'SD'}
+                  {environments.find((e) => e.id === selectedEnvironment)
+                    ?.name || "SD"}
                 </span>
                 <ChevronDown className="w-4 h-4" />
               </button>
-              
+
               {envDropdownOpen && (
                 <div className="absolute right-0 mt-2 w-32 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
                   {environments.map((env) => (
@@ -230,8 +235,8 @@ const Dashboard = () => {
                       }}
                       className={`w-full text-left px-4 py-2 hover:bg-gray-100 transition-colors ${
                         selectedEnvironment === env.id
-                          ? 'bg-gradient-to-br from-slate-800 to-red-900 text-white font-semibold'
-                          : 'text-gray-700'
+                          ? "bg-gradient-to-br from-slate-800 to-red-900 text-white font-semibold"
+                          : "text-gray-700"
                       }`}
                     >
                       {env.name}
@@ -240,7 +245,7 @@ const Dashboard = () => {
                 </div>
               )}
             </div>
-            
+
             <div className="w-8 h-8 bg-gradient-to-br from-slate-800 to-red-900 rounded-full flex items-center justify-center">
               <span className="text-white text-sm font-medium">U</span>
             </div>
@@ -248,7 +253,7 @@ const Dashboard = () => {
         </header>
 
         {/* Dashboard Content */}
-        <main className="flex-1 overflow-auto p-4 md:p-6">
+        <main className="flex-1 overflow-auto">
           {renderContent()}
         </main>
       </div>
