@@ -12,7 +12,7 @@ import {
   DollarSign,
   TrendingUp,
   Loader2,
-  AlertCircle,
+  Frown,
 } from "lucide-react";
 
 const ICON_MAP = [DollarSign, TrendingUp, BarChart3, Activity];
@@ -92,14 +92,12 @@ const PrimarySales = () => {
 
   useEffect(() => {
     dispatch(fetchPrimarySales());
-  }, [dispatch, selectedEnvironment]); // Refetch when environment changes
+  }, [dispatch, selectedEnvironment]);
 
   if (loading) {
     return (
       <div className="space-y-6">
-        <Header
-          wingName={currentEnvironment?.displayName || "SEBL Distribution"}
-        />
+        <Header environment={currentEnvironment} />
         <div className="flex items-center justify-center py-20">
           <Loader2 className="w-8 h-8 animate-spin text-blue-500" />
           <span className="ml-3 text-gray-600">Loading sales data...</span>
@@ -111,18 +109,16 @@ const PrimarySales = () => {
   if (error) {
     return (
       <div className="space-y-6">
-        <Header
-          wingName={currentEnvironment?.displayName || "SEBL Distribution"}
-        />
+        <Header environment={currentEnvironment} />
         <div className="flex items-center justify-center py-20">
           <div className="bg-red-50 border border-red-200 rounded-xl p-6 max-w-md">
             <div className="flex items-start space-x-3">
-              <AlertCircle className="w-6 h-6 text-red-500 flex-shrink-0 mt-0.5" />
+              <Frown className="w-6 h-6 text-red-500 flex-shrink-0 mt-0.5" />
               <div>
                 <h4 className="text-red-800 font-semibold mb-1">
-                  Error Loading Data
+                  NO DATA FOUND
                 </h4>
-                <p className="text-red-600 text-sm">{error}</p>
+                {/* <p className="text-red-600 text-sm">{error}</p> */}
               </div>
             </div>
           </div>
@@ -133,9 +129,7 @@ const PrimarySales = () => {
 
   return (
     <div className="space-y-6">
-      <Header
-        wingName={currentEnvironment?.displayName || "SEBL Distribution"}
-      />
+      <Header environment={currentEnvironment} />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {statsData.map((stat, i) => (
           <StatCard
@@ -151,11 +145,23 @@ const PrimarySales = () => {
   );
 };
 
-const Header = ({ wingName }) => (
+const Header = ({ environment }) => (
   <div>
-    <p className="text-2xl md:text-4xl text-center font-semibold px-4 py-10 bg-gradient-to-r from-red-500 to-blue-500 bg-clip-text text-transparent">
-      {wingName}
-    </p>
+    {/* Logo Display */}
+    {/* <div className="flex justify-center items-center px-4 py-10">
+      {environment?.logo ? (
+        <img
+          src={environment.logo}
+          alt={environment.displayName}
+          className="h-16 md:h-20 object-contain"
+        />
+      ) : (
+        <p className="text-2xl md:text-4xl text-center font-semibold bg-gradient-to-r from-red-500 to-blue-500 bg-clip-text text-transparent">
+          {environment?.displayName || "SEBL Distribution"}
+        </p>
+      )}
+    </div> */}
+
     <div className="bg-gradient-to-r from-blue-500 to-red-600 px-8 py-3 rounded-xl">
       <div className="flex flex-col items-center space-y-2">
         <div className="flex items-center space-x-3">

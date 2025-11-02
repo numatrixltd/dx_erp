@@ -7,12 +7,7 @@ import {
   toggleDashboardDropdown,
 } from "@/lib/features/ui/uiSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import {
-  ChevronDown,
-  Home,
-  Menu,
-  X
-} from "lucide-react";
+import { ChevronDown, Home, Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import AccountingComponent from "./AccountingDashboard/AccountingDashboardPublic";
 import BusinessComponent from "./BusinessDashboard/BusinessDashboardPublic";
@@ -25,6 +20,20 @@ const Dashboard = () => {
     (state) => state.environment
   );
   const [envDropdownOpen, setEnvDropdownOpen] = useState(false);
+  const [currentTime, setCurrentTime] = useState(new Date());
+
+  const currentEnvironment = environments.find(
+    (e) => e.id === selectedEnvironment
+  );
+
+  // Update time every second
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
 
   // Detect screen size and handle responsive behavior
   useEffect(() => {
@@ -182,8 +191,8 @@ const Dashboard = () => {
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col min-w-0">
-        {/* Header */}
-        <header className="bg-white shadow-sm border-b border-gray-200 h-16 flex items-center justify-between px-4 md:px-6">
+        {/* Fixed Header */}
+        <header className="sticky top-0 bg-white shadow-sm border-b border-gray-200 h-24 flex items-center justify-between px-4 md:px-6 z-30">
           <div className="flex items-center space-x-3">
             {/* Mobile menu button */}
             {isMobile && (
@@ -198,18 +207,58 @@ const Dashboard = () => {
               {activeSection}
             </h2>
           </div>
+
+          {/* Company Logo - Center */}
+          <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center justify-center ">
+            {currentEnvironment?.logo ? (
+              <img
+                src={currentEnvironment.logo}
+                alt={currentEnvironment.displayName || currentEnvironment.name}
+                className="h-10 md:h-12 object-contain transition-all duration-300"
+              />
+            ) : (
+              <span className="text-sm md:text-lg font-semibold bg-gradient-to-r from-slate-600 to-red-600 bg-clip-text text-transparent">
+                {currentEnvironment?.displayName || currentEnvironment?.name || "SEBL Distribution"}
+              </span>
+            )}
+          </div>
+
           <div className="flex items-center space-x-2 md:space-x-4">
-            {/* <div className="hidden sm:flex items-center space-x-2 bg-gray-100 rounded-lg px-3 py-2">
-              <Calendar className="w-4 h-4 text-gray-600" />
-              <span className="text-sm text-gray-600">
-                2025-01-01 - 2025-09-28
+            {/* Live Date and Time */}
+            <div className="hidden sm:flex items-center space-x-2 bg-gray-100 rounded-lg px-3 py-2">
+              <span className="text-sm text-red-600">
+                {currentTime.toLocaleDateString("en-US", {
+                  weekday: "short",
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                })}
+              </span>
+              <span className="text-sm text-red-400">|</span>
+              <span className="text-sm font-medium text-red-700">
+                {currentTime.toLocaleTimeString("en-US", {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  second: "2-digit",
+                })}
               </span>
             </div>
-            
-            <div className="sm:hidden flex items-center space-x-1 bg-gray-100 rounded-lg px-2 py-1">
-              <Calendar className="w-4 h-4 text-gray-600" />
-              <span className="text-xs text-gray-600">2025</span>
-            </div> */}
+
+            {/* Mobile Date/Time */}
+            <div className="sm:hidden flex flex-col  bg-gray-100 rounded-lg px-2 py-1">
+              <span className="text-xs text-red-600">
+                {currentTime.toLocaleDateString("en-US", {
+                  month: "short",
+                  day: "numeric",
+                })}
+              </span>
+              <span className="text-xs font-medium text-red-700">
+                {currentTime.toLocaleTimeString("en-US", {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
+              </span>
+            </div>
 
             {/* Environment Selector */}
             <div className="relative">
@@ -253,9 +302,7 @@ const Dashboard = () => {
         </header>
 
         {/* Dashboard Content */}
-        <main className="flex-1 overflow-auto">
-          {renderContent()}
-        </main>
+        <main className="flex-1 overflow-auto mt-10">{renderContent()}</main>
       </div>
     </div>
   );
