@@ -9,7 +9,7 @@ import {
     ArrowUpRight,
     CreditCard,
     Loader2,
-    AlertCircle
+    Frown
 } from "lucide-react";
 
 const POSPublic = () => {
@@ -72,10 +72,10 @@ const POSPublic = () => {
         <div className="p-8 flex items-center justify-center">
           <div className="bg-red-50 border border-red-200 rounded-xl p-6 max-w-md">
             <div className="flex items-start space-x-3">
-              <AlertCircle className="w-6 h-6 text-red-500 flex-shrink-0 mt-0.5" />
+              <Frown  className="w-6 h-6 text-red-500 flex-shrink-0 mt-0.5" />
               <div>
-                <h4 className="text-red-800 font-semibold mb-1">Error Loading Data</h4>
-                <p className="text-red-600 text-sm">{error}</p>
+                <h4 className="text-red-800 font-semibold mb-1">NO DATA FOUND</h4>
+                {/* <p className="text-red-600 text-sm">{error}</p> */}
               </div>
             </div>
           </div>
