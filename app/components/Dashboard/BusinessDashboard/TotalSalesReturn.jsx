@@ -15,7 +15,7 @@ const TotalSalesReturn = () => {
                 <TrendingUp className="w-6 h-6 text-white" />
               </div>
               <h3 className="text-xl font-bold text-white">
-                Total Sales Returnable
+              Total Sales Returns
               </h3>
             </div>
             <Eye className="w-5 h-5 text-blue-200" />
