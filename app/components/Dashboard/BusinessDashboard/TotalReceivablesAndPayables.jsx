@@ -11,7 +11,7 @@ const TotalReceivablesAndPayables = () => {
     <div className="grid grid-cols-1 lg:grid-cols-2 space-y-4 md:gap-8 py-10">
       {/* Total Receivables */}
       <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl border border-white/20 overflow-hidden">
-        <div className="bg-gradient-to-r from-blue-500 to-indigo-600 px-6 py-5 flex items-center justify-between">
+        <div className="bg-gradient-to-r from-blue-500 to-indigo-600 px-6 py-5 flex items-center justify-center gap-6">
           <div className="flex items-center space-x-3">
             <div className="bg-white/20 p-2 rounded-xl">
               <TrendingUp className="w-6 h-6 text-white" />
@@ -52,7 +52,7 @@ const TotalReceivablesAndPayables = () => {
 
       {/* Total Payables */}
       <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl border border-white/20 overflow-hidden">
-        <div className="bg-gradient-to-r from-orange-500 to-red-600 px-6 py-5 flex items-center justify-between">
+        <div className="bg-gradient-to-r from-orange-500 to-red-600 px-6 py-5 flex items-center justify-center gap-6">
           <div className="flex items-center space-x-3">
             <div className="bg-white/20 p-2 rounded-xl">
               <TrendingDown className="w-6 h-6 text-white" />
