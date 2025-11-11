@@ -24,7 +24,7 @@ const TotalSalesReturn = () => {
             <div className="p-8">
               <div className="text-center mb-8">
                 <p className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mb-3">
-                  ৳ 2,186,303.14
+                  ৳ 2,186,303
                 </p>
                 <p className="text-gray-600 font-medium">Total Payable Memos</p>
               </div>
@@ -37,7 +37,7 @@ const TotalSalesReturn = () => {
                     Current
                   </p>
                   <p className="text-xl font-bold text-emerald-800">
-                    ৳ 219,604.44
+                    ৳ 219,604
                   </p>
                   <p className="text-xs text-emerald-600 mt-1">(This Month)</p>
                 </div>
@@ -49,7 +49,7 @@ const TotalSalesReturn = () => {
                     Overdue
                   </p>
                   <p className="text-xl font-bold text-red-800">
-                    ৳ 1,966,698.70
+                    ৳ 1,966,698
                   </p>
                   <p className="text-xs text-red-600 mt-1">(Previous Months)</p>
                 </div>
@@ -58,7 +58,7 @@ const TotalSalesReturn = () => {
             <div className="p-8">
               <div className="text-center mb-8">
                 <p className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mb-3">
-                  ৳ 2,186,303.14
+                  ৳ 2,186,303
                 </p>
                 <p className="text-gray-600 font-medium">Total Applied Memos</p>
               </div>
@@ -71,7 +71,7 @@ const TotalSalesReturn = () => {
                     Current
                   </p>
                   <p className="text-xl font-bold text-emerald-800">
-                    ৳ 219,604.44
+                    ৳ 219,604
                   </p>
                   <p className="text-xs text-emerald-600 mt-1">(This Month)</p>
                 </div>
@@ -83,7 +83,7 @@ const TotalSalesReturn = () => {
                     Overdue
                   </p>
                   <p className="text-xl font-bold text-red-800">
-                    ৳ 1,966,698.70
+                    ৳ 1,966,698
                   </p>
                   <p className="text-xs text-red-600 mt-1">(Previous Months)</p>
                 </div>

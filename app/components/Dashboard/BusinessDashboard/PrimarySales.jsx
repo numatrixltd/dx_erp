@@ -23,6 +23,16 @@ const GRADIENT_MAP = [
   "from-orange-500 to-red-500",
 ];
 
+const formatCurrency = (value) => {
+  // Extract number from string like "BDT 77,380.00"
+  const match = value.match(/BDT\s*([\d,]+\.\d+)/);
+  if (match) {
+    const number = parseFloat(match[1].replace(/,/g, ''));
+    return `BDT ${Math.round(number).toLocaleString()}`;
+  }
+  return value;
+};
+
 const StatCard = ({
   title,
   value,
@@ -43,7 +53,7 @@ const StatCard = ({
         <div>
           <p className="text-sm font-medium text-gray-500 mb-1">{title}</p>
           <p className="text-lg font-bold text-gray-900 leading-tight my-2">
-            {value}
+          {formatCurrency(value)}
           </p>
           <div
             className={`inline-flex items-center text-white justify-center w-8 h-8 rounded-xl bg-gradient-to-r ${iconBg} shadow-lg`}
@@ -70,7 +80,7 @@ const StatCard = ({
         </div>
       </div>
 
-      <p className="text-md text-gray-400">{previous}</p>
+      <p className="text-md text-gray-400">{formatCurrency(previous)}</p>
     </div>
   </div>
 );

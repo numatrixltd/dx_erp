@@ -23,7 +23,7 @@ const TotalReceivablesAndPayables = () => {
         <div className="p-8">
           <div className="text-center mb-8">
             <p className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mb-3">
-              ৳ 2,186,303.14
+              ৳ 2,186,303
             </p>
             <p className="text-gray-600 font-medium">Total Unpaid Invoices</p>
           </div>
@@ -35,7 +35,7 @@ const TotalReceivablesAndPayables = () => {
               <p className="text-sm text-emerald-700 font-semibold mb-2">
                 Current
               </p>
-              <p className="text-xl font-bold text-emerald-800">৳ 219,604.44</p>
+              <p className="text-xl font-bold text-emerald-800">৳ 219,604</p>
               <p className="text-xs text-emerald-600 mt-1">(This Month)</p>
             </div>
             <div className="bg-gradient-to-br from-red-50 to-pink-100 rounded-2xl p-6 text-center border border-red-200">
@@ -43,7 +43,7 @@ const TotalReceivablesAndPayables = () => {
                 <TrendingDown className="w-6 h-6 text-white" />
               </div>
               <p className="text-sm text-red-700 font-semibold mb-2">Overdue</p>
-              <p className="text-xl font-bold text-red-800">৳ 1,966,698.70</p>
+              <p className="text-xl font-bold text-red-800">৳ 1,966,698</p>
               <p className="text-xs text-red-600 mt-1">(Previous Months)</p>
             </div>
           </div>
@@ -64,7 +64,7 @@ const TotalReceivablesAndPayables = () => {
         <div className="p-8">
           <div className="text-center mb-8">
             <p className="text-4xl font-bold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent mb-3">
-              ৳ 0.0030
+              ৳ 00
             </p>
             <p className="text-gray-600 font-medium">Total Unpaid Bills</p>
           </div>
@@ -76,7 +76,7 @@ const TotalReceivablesAndPayables = () => {
               <p className="text-sm text-blue-700 font-semibold mb-2">
                 Current
               </p>
-              <p className="text-xl font-bold text-blue-800">৳ 0.0000</p>
+              <p className="text-xl font-bold text-blue-800">৳ 00</p>
               <p className="text-xs text-blue-600 mt-1">(This Month)</p>
             </div>
             <div className="bg-gradient-to-br from-purple-50 to-violet-100 rounded-2xl p-6 text-center border border-purple-200">
@@ -86,7 +86,7 @@ const TotalReceivablesAndPayables = () => {
               <p className="text-sm text-purple-700 font-semibold mb-2">
                 Overdue
               </p>
-              <p className="text-xl font-bold text-purple-800">৳ 0.0030</p>
+              <p className="text-xl font-bold text-purple-800">৳ 00</p>
               <p className="text-xs text-purple-600 mt-1">(Previous Months)</p>
             </div>
           </div>
