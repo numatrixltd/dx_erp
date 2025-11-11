@@ -9,31 +9,31 @@ const PurchaseAnalytics = () => {
   const purchaseData = [
     {
       title: "Today",
-      value: "BDT 0.0000",
+      value: "BDT 00",
       change: "0%",
       trend: "neutral",
-      previous: "Yesterday: BDT 1,301,384.0000",
+      previous: "Yesterday: BDT 1,301,384",
     },
     {
       title: "This Week",
-      value: "BDT 0.0000",
+      value: "BDT 00",
       change: "0%",
       trend: "neutral",
-      previous: "Last Week: BDT 1,301,384.0000",
+      previous: "Last Week: BDT 1,301,384",
     },
     {
       title: "This Month",
-      value: "BDT 9,864,490.0000",
+      value: "BDT 9,864,490",
       change: "1000+%",
       trend: "down",
-      previous: "Last Month: BDT 301,811,695.8130",
+      previous: "Last Month: BDT 301,811,695",
     },
     {
       title: "This Year",
-      value: "BDT 333,128,611.3130",
+      value: "BDT 333,128,611",
       change: "0%",
       trend: "up",
-      previous: "Last Year: BDT 0.0000",
+      previous: "Last Year: BDT 00",
     },
   ];
 

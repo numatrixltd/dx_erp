@@ -19,6 +19,7 @@ export async function GET(request) {
       sd: "9083",
       dxne: "9091",
       dxhi: "9092",
+      dxtl: "9093",
     };
 
     const port = portMap[env] || "9083";
