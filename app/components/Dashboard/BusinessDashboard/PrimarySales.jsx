@@ -178,7 +178,9 @@ const Header = ({ environment }) => (
           <CreditCard className="w-7 h-7 text-white" />
           <h3 className="text-2xl font-bold text-white">Primary Sales</h3>
         </div>
-
+        <p className="text-white text-lg font-semibold bg-white/20 px-4 py-1 rounded-full">
+          {environment?.displayName || "SEBL Distribution"}
+        </p>
         <p className="text-indigo-100 mt-2 text-center">
           Track your Sales performance metrics
         </p>

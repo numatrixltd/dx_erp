@@ -1,10 +1,19 @@
 import { NextResponse } from "next/server";
 
+const PORT_MAP = {
+  dx: "9085",
+  dxdl: "9086",
+  sd: "9083",
+  dxne: "9091",
+  dxhi: "9092",
+  dxtl: "9093",
+};
+
 export async function GET(request) {
   try {
     const { searchParams } = new URL(request.url);
     const path = searchParams.get("path");
-    const env = searchParams.get("env") || "sd"; // Default to 'sd'
+    const env = searchParams.get("env") || "dx";
 
     if (!path) {
       return NextResponse.json(
@@ -13,16 +22,7 @@ export async function GET(request) {
       );
     }
 
-    // Determine port based on environment
-    const portMap = {
-      dxdl: "9086",
-      sd: "9083",
-      dxne: "9091",
-      dxhi: "9092",
-      dxtl: "9093",
-    };
-
-    const port = portMap[env] || "9083";
+    const port = PORT_MAP[env] || "9083";
 
     const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}:${port}/${env}/${path}`;
 
@@ -64,7 +64,7 @@ export async function POST(request) {
   try {
     const { searchParams } = new URL(request.url);
     const path = searchParams.get("path");
-    const env = searchParams.get("env") || "sd";
+    const env = searchParams.get("env") || "dx";
     const body = await request.json();
 
     if (!path) {
@@ -74,8 +74,7 @@ export async function POST(request) {
       );
     }
 
-    // Determine port based on environment
-    const port = env === "dxdl" ? "9086" : "9083";
+    const port = PORT_MAP[env] || "9083";
 
     // Build URL with base URL + port + env + path
     const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}:${port}/${env}/${path}`;
