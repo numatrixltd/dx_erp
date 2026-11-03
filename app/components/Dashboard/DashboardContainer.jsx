@@ -274,7 +274,7 @@ const Dashboard = () => {
               </button>
 
               {envDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-32 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
+                <div className="absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
                   {environments.map((env) => (
                     <button
                       key={env.id}

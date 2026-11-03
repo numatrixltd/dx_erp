@@ -27,6 +27,12 @@ const POSPublic = () => {
     dispatch(fetchPOSData());
   }, [dispatch, selectedEnvironment]); // Refetch when environment changes
 
+  useEffect(() => {
+    if (posData) {
+      console.log("POS retailSalesData", posData);
+    }
+  }, [posData]);
+
   if (loading) {
     return (
       <div className="bg-white/70 backdrop-blur-sm rounded-3xl shadow-xl border border-white/20 overflow-hidden col-span-2">
@@ -61,9 +67,9 @@ const POSPublic = () => {
               <CreditCard className="w-7 h-7 text-white" />
               <h3 className="text-2xl font-bold text-white">POS</h3>
             </div>
-            {/* <p className="text-white text-lg font-semibold bg-white/20 px-4 py-1 rounded-full">
+            <p className="text-white text-lg font-semibold bg-white/20 px-4 py-1 rounded-full">
               {currentEnvironment?.displayName || 'SEBL Distribution'}
-            </p> */}
+            </p>
             <p className="text-indigo-100 mt-2 text-center">
               Track your POS performance metrics
             </p>
@@ -85,8 +91,8 @@ const POSPublic = () => {
   }
 
   const formatCurrency = (value) => {
-    // Extract number from string like "BDT 77,380.00"
-    const match = value.match(/BDT\s*([\d,]+\.\d+)/);
+    if (typeof value !== "string") return value ?? "";
+    const match = value.match(/BDT\s*([\d,]+\.?\d*)/);
     if (match) {
       const number = parseFloat(match[1].replace(/,/g, ''));
       return `BDT ${Math.round(number).toLocaleString()}`;
@@ -158,9 +164,9 @@ const POSPublic = () => {
             <CreditCard className="w-7 h-7 text-white" />
             <h3 className="text-2xl font-bold text-white">POS</h3>
           </div>
-          {/* <p className="text-white text-lg font-semibold bg-white/20 px-4 py-1 rounded-full">
+          <p className="text-white text-lg font-semibold bg-white/20 px-4 py-1 rounded-full">
             {currentEnvironment?.displayName || 'SEBL Distribution'}
-          </p> */}
+          </p>
           <p className="text-indigo-100 mt-2 text-center">
             Track your POS performance metrics
           </p>
@@ -168,7 +174,7 @@ const POSPublic = () => {
       </div>
       <div className="p-2 md:p-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {posData.map((stat, index) => (
+          {(Array.isArray(posData) ? posData : []).map((stat, index) => (
             <StatCard
               key={index}
               {...stat}
